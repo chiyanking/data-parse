@@ -1,0 +1,58 @@
+group 'nc.liat6'
+version '1.0.0-SNAPSHOT'
+
+apply plugin: 'java'
+apply plugin: 'maven'
+
+sourceCompatibility = 1.8
+
+repositories {
+    maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
+    mavenLocal()
+    mavenCentral()
+}
+
+dependencies {
+    compile(group: 'dom4j', name: 'dom4j', version: '1.6.1') {
+        exclude module: 'xml-apis'
+    }
+    compile group: 'org.jsoup', name: 'jsoup', version: '1.6.3'
+    compile group: 'org.apache.poi', name: 'poi-ooxml', version: '3.10.1'
+    compile group: 'org.apache.xmlbeans', name: 'xmlbeans', version: '2.6.0'
+    compile group: 'org.apache.poi', name: 'poi-scratchpad', version: '3.9'
+    compile(group: 'xerces', name: 'xercesImpl', version: '2.8.0') {
+//        exclude group: 'xml-apis'
+    }
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+}
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+//打包源代码
+task sourcesJar(type: Jar, dependsOn: classes) {
+    classifier = 'sources'
+    from sourceSets.main.allSource
+}
+artifacts {
+    archives sourcesJar
+}
+//如果希望gradle install，安装到.m2本地仓库，参考下面的内容
+install {
+    repositories.mavenInstaller {
+        pom.version = "$project.version"
+        pom.artifactId = "$project.name"
+        pom.groupId = "$project.group"
+    }
+}
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            repository(url: "http://192.168.0.23:8081/repository/maven-snapshots/") {
+                authentication(userName: "admin", password: "admin123")
+            }
+            pom.version = "$project.version"
+            pom.artifactId = "$project.name"
+            pom.groupId = "$project.group"
+        }
+    }
+}
