@@ -7,7 +7,7 @@
 *.war
 *.ear
 /**/*.iml
-.idea/
+/**/.idea/
 /**/rebel-remote.xml
 /**/rebel.xml
 /**/.DS_Store
