@@ -17,12 +17,14 @@ import org.apache.poi.hssf.usermodel.HSSFCellStyle;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.BorderStyle;
+import org.apache.poi.ss.usermodel.CellType;
 
 /**
  * XLS导出
- * 
+ *
  * @author 6tail
- * 
+ *
  */
 public class XlsWriter extends AbstractWriter implements Closeable{
   private OutputStream outputStream;
@@ -117,7 +119,8 @@ public class XlsWriter extends AbstractWriter implements Closeable{
       cell.setCellStyle(cellStyle);
       switch(item.getType()){
         case number:
-          cell.setCellType(HSSFCell.CELL_TYPE_NUMERIC);
+          cell.setCellType(CellType.NUMERIC);
+//          cell.setCellType(HSSFCell.CELL_TYPE_NUMERIC);
           try{
             cell.setCellValue(Double.parseDouble(o));
           }catch(Exception e){
@@ -125,7 +128,8 @@ public class XlsWriter extends AbstractWriter implements Closeable{
           }
           break;
         default:
-          cell.setCellType(HSSFCell.CELL_TYPE_STRING);
+            cell.setCellType(CellType.STRING);
+//          cell.setCellType(HSSFCell.CELL_TYPE_STRING);
           cell.setCellValue(o);
           break;
       }
@@ -151,10 +155,14 @@ public class XlsWriter extends AbstractWriter implements Closeable{
       case IWrapperRule.BORDER_NONE:
         break;
       case IWrapperRule.BORDER_ALL:
-        cellStyle.setBorderLeft(HSSFCellStyle.BORDER_THIN);
-        cellStyle.setBorderTop(HSSFCellStyle.BORDER_THIN);
-        cellStyle.setBorderRight(HSSFCellStyle.BORDER_THIN);
-        cellStyle.setBorderBottom(HSSFCellStyle.BORDER_THIN);
+          cellStyle.setBorderLeft(BorderStyle.THIN);
+          cellStyle.setBorderTop(BorderStyle.THIN);
+          cellStyle.setBorderLeft(BorderStyle.THIN);
+          cellStyle.setBorderRight(BorderStyle.THIN);
+//        cellStyle.setBorderLeft(HSSFCellStyle.BORDER_THIN);
+//        cellStyle.setBorderTop(HSSFCellStyle.BORDER_THIN);
+//        cellStyle.setBorderRight(HSSFCellStyle.BORDER_THIN);
+//        cellStyle.setBorderBottom(HSSFCellStyle.BORDER_THIN);
         break;
     }
   }
