@@ -12,6 +12,7 @@ import nc.liat6.data.parser.bean.Item;
 import nc.liat6.data.wrapper.rule.IWrapperRule;
 import nc.liat6.data.writer.AbstractWriter;
 import nc.liat6.data.writer.bean.Target;
+import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -114,7 +115,8 @@ public class XlsxWriter extends AbstractWriter implements Closeable{
       XSSFCell cell = row.createCell(i);
       switch(item.getType()){
         case number:
-          cell.setCellType(XSSFCell.CELL_TYPE_NUMERIC);
+          cell.setCellType(CellType.NUMERIC);
+//          cell.setCellType(XSSFCell.CELL_TYPE_NUMERIC);
           try{
             cell.setCellValue(Double.parseDouble(o));
           }catch(Exception e){
@@ -122,7 +124,8 @@ public class XlsxWriter extends AbstractWriter implements Closeable{
           }
           break;
         default:
-          cell.setCellType(XSSFCell.CELL_TYPE_STRING);
+          cell.setCellType(CellType.STRING);
+//          cell.setCellType(XSSFCell.CELL_TYPE_STRING);
           cell.setCellValue(o);
           break;
       }
